@@ -1,243 +1,119 @@
 "use client";
 import { useChat } from "ai/react";
 import Image from "next/image";
+import send from "@/assets/send.svg";
+import robo from "@/assets/Robo.svg";
+import userPic from "@/assets/userPic.jpg";
+import groqpic from "@/assets/groq.jpg";
+import mic from "@/assets/mic.svg";
 import Markdown from "react-markdown";
 
 const Chatbox = () => {
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat();
+  const handleSuggestionClick = (suggestion: string) => {
+    const event = {
+      target: {
+        value: suggestion,
+      },
+    } as React.ChangeEvent<HTMLTextAreaElement>;
+    handleInputChange(event);
+  };
   return (
     <div className="flex h-screen w-full flex-col max-w-5xl mx-auto">
-      <div className="flex-1 overflow-y-auto rounded-xl bg-slate-200 p-4 text-sm leading-6 text-slate-900 dark:bg-slate-800 dark:text-slate-300 sm:text-base sm:leading-7">
-        {messages.length > 0
-          ? messages.map((m) => (
-              <div key={m.id} className="whitespace-pre-wrap">
-                {m.role === "user" ? (
-                  <div className="flex flex-row px-2 py-4 sm:px-4">
-                    <Image
-                      alt=""
-                      className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
-                      src="/as.jpg"
-                      width={32}
-                      height={32}
-                    />
+      <div className="flex-1 overflow-y-auto rounded-xl bg-neutral-200 p-4 text-sm leading-6 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-300 sm:text-base sm:leading-7">
+        {messages.length > 0 ? (
+          messages.map((m) => (
+            <div key={m.id} className="whitespace-pre-wrap">
+              {m.role === "user" ? (
+                <div className="flex flex-row px-2 py-4 sm:px-4">
+                  <Image
+                    alt="user"
+                    placeholder="blur"
+                    className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
+                    src={userPic}
+                    width={32}
+                    height={32}
+                  />
 
-                    <div className="flex max-w-3xl items-center">
-                      <p>{m.content}</p>
-                    </div>
+                  <div className="flex max-w-3xl items-center">
+                    <p>{m.content}</p>
                   </div>
-                ) : (
-                  <div className="mb-4 flex rounded-xl bg-slate-50 px-2 py-6 dark:bg-slate-900 sm:px-4">
-                    <img
-                      alt=""
-                      className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
-                      src="https://dummyimage.com/256x256/354ea1/ffffff&text=G"
-                    />
+                </div>
+              ) : (
+                <div className="mb-4 flex rounded-xl bg-neutral-50 px-2 py-6 dark:bg-neutral-900 sm:px-4">
+                  <Image
+                    alt="groq"
+                    className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
+                    src={groqpic}
+                    placeholder="blur"
+                  />
 
-                    <div className="max-w-3xl rounded-xl">
-                      <Markdown>{m.content}</Markdown>
-                    </div>
+                  <div className="max-w-3xl rounded-xl">
+                    <Markdown>{m.content}</Markdown>
                   </div>
-                )}
-              </div>
-            ))
-          : null}
-        {/* <div className="flex flex-row px-2 py-4 sm:px-4">
-          <Image
-            alt=""
-            className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
-            src="/as.jpg"
-            width={32}
-            height={32}
-          />
-
-          <div className="flex max-w-3xl items-center">
-            <p>Explain quantum computing in simple terms</p>
-          </div>
-        </div>
-        <div className="mb-2 flex w-full flex-row justify-end gap-x-2 text-slate-500">
-          <button title="btn" className="hover:text-blue-600">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3"></path>
-            </svg>
-          </button>
-          <button title="btn" className="hover:text-blue-600" type="button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2 -2h-7a3 3 0 0 0 -3 3"></path>
-            </svg>
-          </button>
-          <button title="btn" className="hover:text-blue-600" type="button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M8 8m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z"></path>
-              <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
-            </svg>
-          </button>
-        </div>
-        <div className="mb-4 flex rounded-xl bg-slate-50 px-2 py-6 dark:bg-slate-900 sm:px-4">
-          <img
-            alt=""
-            className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
-            src="https://dummyimage.com/256x256/354ea1/ffffff&text=G"
-          />
-
-          <div className="flex max-w-3xl items-center rounded-xl">
-            <p>
-              Certainly! Quantum computing is a new type of computing that
-              relies on the principles of quantum physics. Traditional
-              computers, like the one you might be using right now, use bits to
-              store and process information. These bits can represent either a 0
-              or a 1. In contrast, quantum computers use quantum bits, or
-              qubits.
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          <div className="flex flex-col items-center">
+            <p className="text-xl md:text-2xl py-20 px-2 font-semibold text-center m-auto text-stone-400 tracking-wide">
+              Start Chatting with
               <br />
-              <br />
-              Unlike bits, qubits can represent not only a 0 or a 1 but also a
-              superposition of both states simultaneously. This means that a
-              qubit can be in multiple states at once, which allows quantum
-              computers to perform certain calculations much faster and more
-              efficiently
+              <span className="text-orange-500 text-2xl md:text-4xl">Groq</span>
+              .AI Now!
             </p>
+            <Image src={robo} id="pic" alt="ROBO" width={300} className="hover:scale-110 transition-all duration-500 active:scale-95"/>
           </div>
-        </div>
-        <div className="flex px-2 py-4 sm:px-4">
-          <Image
-            alt=""
-            className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
-            src="/as.jpg"
-            width={32}
-            height={32}
-          />
-
-          <div className="flex max-w-3xl items-center">
-            <p>What are three great applications of quantum computing?</p>
-          </div>
-        </div>
-        <div className="mb-2 flex w-full flex-row justify-end gap-x-2 text-slate-500">
-          <button title="btn" className="hover:text-blue-600">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M7 11v8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3"></path>
-            </svg>
-          </button>
-          <button title="btn" className="hover:text-blue-600" type="button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2 -2h-7a3 3 0 0 0 -3 3"></path>
-            </svg>
-          </button>
-          <button title="btn" className="hover:text-blue-600" type="button">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M8 8m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z"></path>
-              <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
-            </svg>
-          </button>
-        </div>
-        <div className="mb-4 flex rounded-xl bg-slate-50 px-2 py-6 dark:bg-slate-900 sm:px-4">
-          <img
-            alt=""
-            className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
-            src="https://dummyimage.com/256x256/354ea1/ffffff&text=G"
-          />
-
-          <div className="flex max-w-3xl items-center rounded-xl">
-            <p>
-              Three great applications of quantum computing are: Optimization of
-              complex problems, Drug Discovery and Cryptography.
-            </p>
-          </div>
-        </div> */}
+        )}
       </div>
       {/* Prompt suggestions */}
-      <div className="mt-4 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-slate-600 dark:text-slate-300 sm:text-sm">
+      <div className="mt-4 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-neutral-600 dark:text-neutral-300 sm:text-sm">
         <button
           title="btn"
-          className="rounded-lg bg-slate-200 p-2 hover:bg-blue-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-blue-600 dark:hover:text-slate-50"
+          onClick={() => handleSuggestionClick("Make it Shorter and simpler.")}
+          className="rounded-lg bg-neutral-200 p-2 hover:bg-orange-600 hover:text-neutral-200 dark:bg-neutral-800 dark:hover:bg-orange-600 dark:hover:text-neutral-50 transition-all active:scale-105"
         >
-          Toggle web search
+          Make Shorter
         </button>
+
         <button
           title="btn"
-          className="rounded-lg bg-slate-200 p-2 hover:bg-blue-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-blue-600 dark:hover:text-slate-50"
-        >
-          Improve
-        </button>
-        <button
-          title="btn"
-          className="rounded-lg bg-slate-200 p-2 hover:bg-blue-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-blue-600 dark:hover:text-slate-50"
+          onClick={() =>
+            handleSuggestionClick("Make it longer. explain it nicely")
+          }
+          className="rounded-lg bg-neutral-200 p-2 hover:bg-orange-600 hover:text-neutral-200 dark:bg-neutral-800 dark:hover:bg-orange-600 dark:hover:text-neutral-50 transition-all active:scale-105"
         >
           Make longer
         </button>
         <button
           title="btn"
-          className="rounded-lg bg-slate-200 p-2 hover:bg-blue-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-blue-600 dark:hover:text-slate-50"
+          onClick={() =>
+            handleSuggestionClick("Write it in a more professional tone.")
+          }
+          className="rounded-lg bg-neutral-200 p-2 hover:bg-orange-600 hover:text-neutral-200 dark:bg-neutral-800 dark:hover:bg-orange-600 dark:hover:text-neutral-50 transition-all active:scale-105"
         >
-          Explain in simple words
+          More professional
         </button>
         <button
           title="btn"
-          className="rounded-lg bg-slate-200 p-2 hover:bg-blue-600 hover:text-slate-200 dark:bg-slate-800 dark:hover:bg-blue-600 dark:hover:text-slate-50"
+          onClick={() =>
+            handleSuggestionClick("Write it in a more casual and light tone.")
+          }
+          className="rounded-lg bg-neutral-200 p-2 hover:bg-orange-600 hover:text-neutral-200 dark:bg-neutral-800 dark:hover:bg-orange-600 dark:hover:text-neutral-50 transition-all active:scale-105"
         >
-          Summarize in three lines
+          More casual
+        </button>
+        <button
+          title="btn"
+          onClick={() => handleSuggestionClick("Paraphrase it")}
+          className="rounded-lg bg-neutral-200 p-2 hover:bg-orange-600 hover:text-neutral-200 dark:bg-neutral-800 dark:hover:bg-orange-600 dark:hover:text-neutral-50 transition-all active:scale-105"
+        >
+          Paraphrase
         </button>
       </div>
-      {/* Prompt message input */}
+
       <form className="mt-2" onSubmit={handleSubmit}>
         <label htmlFor="chat-input" className="sr-only">
           Enter your prompt
@@ -246,30 +122,14 @@ const Chatbox = () => {
           <button
             title="btn"
             type="button"
-            className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-600"
+            className="absolute inset-y-0 left-0 flex items-center px-3 text-neutral-500 hover:text-orange-600 dark:text-neutral-400 dark:hover:text-orange-600"
           >
-            <svg
-              aria-hidden="true"
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              strokeWidth="2"
-              stroke="currentColor"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M9 2m0 3a3 3 0 0 1 3 -3h0a3 3 0 0 1 3 3v5a3 3 0 0 1 -3 3h0a3 3 0 0 1 -3 -3z"></path>
-              <path d="M5 10a7 7 0 0 0 14 0"></path>
-              <path d="M8 21l8 0"></path>
-              <path d="M12 17l0 4"></path>
-            </svg>
+            <Image src={mic} alt="mic" width={24} />
             <span className="sr-only">Use voice input</span>
           </button>
           <textarea
             id="chat-input"
-            className="block w-full resize-none rounded-xl border-none bg-slate-200 p-4 pl-10 pr-20 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-400 dark:focus:ring-blue-500 sm:text-base"
+            className="block w-full resize-none rounded-xl border-none bg-neutral-200 p-4 pl-12 pr-20 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder-neutral-400 dark:focus:ring-orange-500 sm:text-base"
             placeholder="Enter your prompt"
             rows={1}
             value={input}
@@ -279,9 +139,10 @@ const Chatbox = () => {
           <button
             title="submit"
             type="submit"
-            className="absolute bottom-2 right-2.5 rounded-lg bg-blue-700 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 sm:text-base"
+            className="absolute bottom-2 right-2.5 rounded-lg bg-orange-700 px-4 py-2 text-sm font-medium text-neutral-200 hover:bg-orange-800 focus:outline-none focus:ring-4 focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 sm:text-base flex items-center gap-2 active:scale-95 transition-all"
           >
-            Send <span className="sr-only">Send message</span>
+            Send <Image src={send} alt="" width={20} />
+            <span className="sr-only">Send message</span>
           </button>
         </div>
       </form>

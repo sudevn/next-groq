@@ -1,13 +1,1 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  background: rgb(18, 18, 18);
-}
-::-webkit-scrollbar {
-  background: rgb(71, 77, 83);
-}
-::-webkit-scrollbar-thumb {
-  background: rgb(14, 27, 47);
-}
+@tailwind base;@tailwind components;@tailwind utilities;body{background:rgb(29,27,25)}::-webkit-scrollbar{background:rgb(33,25,16)}::-webkit-scrollbar-thumb{background:rgb(71,77,83)}#pic{filter:drop-shadow(2px 6px 12px rgba(100,51,30,.4))}#pic:hover{filter:drop-shadow(2px 6px 12px rgba(132,70,43,.65))}
