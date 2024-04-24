@@ -6,7 +6,7 @@ const inter = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Groq AI Chatbot",
-  description: "Groq AI Chatbot - Made using Next.js 14",
+  description: "Groq AI Chatbot - Made using Next.js 14 and Vercel AI sdk",
   metadataBase: new URL("https://groq-ai.vercel.app/"),
   manifest: "/manifest.json",
   icons: {
