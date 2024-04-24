@@ -1,6 +1,7 @@
 "use client";
 import { useChat } from "ai/react";
 import Image from "next/image";
+import sparkles from "@/assets/Sparkle.svg";
 import send from "@/assets/send.svg";
 import robo from "@/assets/Robo.svg";
 import userPic from "@/assets/userPic.jpg";
@@ -49,7 +50,7 @@ const Chatbox = () => {
                     placeholder="blur"
                   />
 
-                  <div className="max-w-3xl rounded-xl">
+                  <div className="max-w-3xl rounded-xl markdown-body">
                     <Markdown>{m.content}</Markdown>
                   </div>
                 </div>
@@ -64,7 +65,24 @@ const Chatbox = () => {
               <span className="text-orange-500 text-2xl md:text-4xl">Groq</span>
               .AI Now!
             </p>
-            <Image src={robo} id="pic" alt="ROBO" width={300} className="hover:scale-110 transition-all duration-500 active:scale-95"/>
+            <Image
+              src={robo}
+              id="pic"
+              alt="ROBO"
+              width={300}
+              className="hover:scale-110 transition-all duration-500 active:scale-95"
+            />
+          </div>
+        )}
+        {isLoading && (
+          <div className="flex items-center gap-2 px-10">
+            <Image
+              src={sparkles}
+              alt="Loading"
+              width={22}
+              className="animate-pulse"
+            />
+            <span>Generating...</span>
           </div>
         )}
       </div>
@@ -139,9 +157,24 @@ const Chatbox = () => {
           <button
             title="submit"
             type="submit"
+            disabled={isLoading}
             className="absolute bottom-2 right-2.5 rounded-lg bg-orange-700 px-4 py-2 text-sm font-medium text-neutral-200 hover:bg-orange-800 focus:outline-none focus:ring-4 focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 sm:text-base flex items-center gap-2 active:scale-95 transition-all"
           >
-            Send <Image src={send} alt="" width={20} />
+            {isLoading ? (
+              <>
+                Generating
+                <Image
+                  src={sparkles}
+                  alt="#"
+                  width={22}
+                  className=" animate-pulse"
+                />
+              </>
+            ) : (
+              <>
+                Send <Image src={send} alt="" width={20} />
+              </>
+            )}
             <span className="sr-only">Send message</span>
           </button>
         </div>
