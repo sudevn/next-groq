@@ -8,10 +8,20 @@ import userPic from "@/assets/userPic.jpg";
 import groqpic from "@/assets/groq.jpg";
 import mic from "@/assets/mic.svg";
 import Markdown from "react-markdown";
+import { useEffect, useRef } from "react";
 
 const Chatbox = () => {
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
   const handleSuggestionClick = (suggestion: string) => {
     const event = {
       target: {
@@ -85,6 +95,7 @@ const Chatbox = () => {
             <span>Generating...</span>
           </div>
         )}
+        <div ref={messagesEndRef} />
       </div>
       {/* Prompt suggestions */}
       <div className="mt-4 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-neutral-600 dark:text-neutral-300 sm:text-sm">
