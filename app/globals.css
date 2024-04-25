@@ -77,7 +77,6 @@ body {
   text-decoration: underline;
 }
 
-/* Lists */
 .markdown-body ul,
 .markdown-body ol {
   padding-left: 20px;
@@ -86,25 +85,23 @@ body {
   list-style-type: disc;
 }
 
-/* Blockquotes */
 .markdown-body blockquote {
-  border-left: 4px solid #a0a0a0;
+  border-left: 4px solid #957b5d;
   margin-left: 0;
   margin-right: 0;
   padding-left: 15px;
-  color: #777;
+  color: #a3743d;
 }
 
-/* Code blocks */
 .markdown-body pre {
-  background-color: #f5f5f5;
-  border-left: 3px solid #c5c5c5;
+  background-color: #464646dc;
+  border-left: 3px solid #e3843b;
+  color: white;
   padding: 10px;
   overflow-x: auto;
 }
 
 .markdown-body code {
-  background-color: #f5f5f5;
   padding: 2px 4px;
   font-size: 90%;
   border-radius: 3px;
@@ -118,13 +115,13 @@ body {
 
 .markdown-body th,
 .markdown-body td {
-  border: 1px solid #ddd;
+  border: 1px solid hsl(0, 0%, 32%);
   padding: 8px;
   text-align: left;
 }
 
 .markdown-body th {
-  background-color: #f5f5f5;
+  background-color: #626161;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -132,6 +129,6 @@ body {
 }
 
 .scrollbar-hide {
-  -ms-overflow-style: none;  
+  -ms-overflow-style: none;
   scrollbar-width: none;
 }

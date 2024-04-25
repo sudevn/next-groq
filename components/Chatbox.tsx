@@ -31,8 +31,8 @@ const Chatbox = () => {
     handleInputChange(event);
   };
   return (
-    <div className="flex pb-0.5 min-h-svh w-full flex-col max-w-5xl mx-auto">
-      <div className="flex-1 overflow-y-auto rounded-xl bg-neutral-200 p-4 text-sm leading-6 text-neutral-900 dark:bg-neutral-800/60 dark:text-neutral-300 sm:text-base sm:leading-7 border border-orange-600/30 h-full">
+    <div className="flex pb-0.5 h-svh w-full flex-col max-w-5xl mx-auto">
+      <div className="flex-1 overflow-y-auto rounded-xl bg-neutral-200 p-4 text-sm leading-6 text-neutral-900 dark:bg-neutral-800/60 dark:text-neutral-300 sm:text-base sm:leading-7 border border-orange-600/20 h-full">
         {messages.length > 0 ? (
           messages.map((m) => (
             <div key={m.id} className="whitespace-pre-wrap">
