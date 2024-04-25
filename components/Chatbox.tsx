@@ -31,8 +31,8 @@ const Chatbox = () => {
     handleInputChange(event);
   };
   return (
-    <div className="flex max-h-svh w-full flex-col max-w-5xl mx-auto">
-      <div className="flex-1 overflow-y-auto rounded-xl bg-neutral-200 p-4 text-sm leading-6 text-neutral-900 dark:bg-neutral-800/60 dark:text-neutral-300 sm:text-base sm:leading-7">
+    <div className="flex pb-0.5 min-h-svh w-full flex-col max-w-5xl mx-auto">
+      <div className="flex-1 overflow-y-auto rounded-xl bg-neutral-200 p-4 text-sm leading-6 text-neutral-900 dark:bg-neutral-800/60 dark:text-neutral-300 sm:text-base sm:leading-7 border border-orange-600/30 h-full">
         {messages.length > 0 ? (
           messages.map((m) => (
             <div key={m.id} className="whitespace-pre-wrap">
@@ -41,7 +41,7 @@ const Chatbox = () => {
                   <Image
                     alt="user"
                     placeholder="blur"
-                    className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
+                    className="mr-2 flex size-6 md:size-8 rounded-full sm:mr-4"
                     src={userPic}
                     width={32}
                     height={32}
@@ -55,9 +55,11 @@ const Chatbox = () => {
                 <div className="mb-4 flex rounded-xl bg-neutral-50 px-2 py-6 dark:bg-neutral-900 sm:px-4">
                   <Image
                     alt="groq"
-                    className="mr-2 flex h-8 w-8 rounded-full sm:mr-4"
+                    className="mr-2 flex size-6 md:size-8 rounded-full sm:mr-4"
                     src={groqpic}
                     placeholder="blur"
+                    width={32}
+                    height={32}
                   />
 
                   <div className="max-w-3xl rounded-xl markdown-body">
@@ -98,7 +100,7 @@ const Chatbox = () => {
         <div ref={messagesEndRef} />
       </div>
       {/* Prompt suggestions */}
-      <div className="mt-4 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-neutral-600 dark:text-neutral-300 sm:text-sm">
+      <div className="mt-4 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-neutral-600 dark:text-neutral-300 sm:text-sm scrollbar-hide">
         <button
           title="btn"
           onClick={() => handleSuggestionClick("Make it Shorter and simpler.")}

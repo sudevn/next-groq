@@ -126,3 +126,12 @@ body {
 .markdown-body th {
   background-color: #f5f5f5;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;
+}
