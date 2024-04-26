@@ -4,6 +4,7 @@ import Image from "next/image";
 import sparkles from "@/assets/Sparkle.svg";
 import send from "@/assets/send.svg";
 import robo from "@/assets/Robo.svg";
+import copy from "@/assets/copy.svg";
 import userPic from "@/assets/userPic.jpg";
 import groqpic from "@/assets/groq.jpg";
 import mic from "@/assets/mic.svg";
@@ -52,7 +53,7 @@ const Chatbox = () => {
                   </div>
                 </div>
               ) : (
-                <div className="mb-4 flex rounded-xl bg-neutral-50 px-2 py-6 dark:bg-neutral-900 sm:px-4">
+                <div className="mb-4 flex rounded-xl bg-neutral-50 px-2 py-6 dark:bg-neutral-900 sm:px-4 relative">
                   <Image
                     alt="groq"
                     className="mr-2 flex size-6 md:size-8 rounded-full sm:mr-4"
@@ -65,6 +66,22 @@ const Chatbox = () => {
                   <div className="max-w-3xl rounded-xl markdown-body">
                     <Markdown>{m.content}</Markdown>
                   </div>
+                  <button
+                    type="button"
+                    title="copy"
+                    className="absolute top-2 right-2"
+                    onClick={() => {
+                      navigator.clipboard.writeText(m.content);
+                      alert("Copied to clipboard");
+                    }}
+                  >
+                    <Image
+                      src={copy}
+                      alt="copy"
+                      width={19}
+                      className="opacity-50 hover:opacity-75"
+                    />
+                  </button>
                 </div>
               )}
             </div>
