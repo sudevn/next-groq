@@ -7,7 +7,6 @@ import robo from "@/assets/Robo.svg";
 import copy from "@/assets/copy.svg";
 import userPic from "@/assets/userPic.jpg";
 import groqpic from "@/assets/groq.jpg";
-import mic from "@/assets/mic.svg";
 import Markdown from "react-markdown";
 import { useEffect, useRef } from "react";
 
@@ -88,7 +87,7 @@ const Chatbox = () => {
           ))
         ) : (
           <div className="flex flex-col items-center">
-            <p className="text-xl md:text-2xl py-20 px-2 font-semibold text-center m-auto text-stone-400 tracking-wide">
+            <p className="text-xl md:text-2xl py-20 px-2 font-semibold text-center m-auto text-stone-500 dark:text-stone-400 tracking-wide">
               Start Chatting with
               <br />
               <span className="text-orange-500 text-2xl md:text-4xl">Groq</span>
@@ -167,14 +166,6 @@ const Chatbox = () => {
           Enter your prompt
         </label>
         <div className="relative">
-          <button
-            title="btn"
-            type="button"
-            className="absolute inset-y-0 left-0 flex items-center px-3 text-neutral-500 hover:text-orange-600 dark:text-neutral-400 dark:hover:text-orange-600"
-          >
-            <Image src={mic} alt="mic" width={24} />
-            <span className="sr-only">Use voice input</span>
-          </button>
           <textarea
             id="chat-input"
             className="block w-full resize-none rounded-xl border-none bg-neutral-200 p-4 pl-12 pr-20 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder-neutral-400 dark:focus:ring-orange-500 sm:text-base"
@@ -188,7 +179,7 @@ const Chatbox = () => {
             title="submit"
             type="submit"
             disabled={isLoading}
-            className="absolute bottom-2 right-2.5 rounded-lg bg-orange-700 px-4 py-2 text-sm font-medium text-neutral-200 hover:bg-orange-800 focus:outline-none focus:ring-4 focus:ring-orange-300 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800 sm:text-base flex items-center gap-2 active:scale-95 transition-all"
+            className="absolute bottom-2 right-2.5 rounded-lg  px-4 py-2 text-sm font-medium text-neutral-200 focus:outline-none focus:ring-4 focus:ring-orange-300 bg-orange-600 hover:bg-orange-700 dark:focus:ring-orange-800 sm:text-base flex items-center gap-2 active:scale-95 transition-all"
           >
             {isLoading ? (
               <>
@@ -197,7 +188,7 @@ const Chatbox = () => {
                   src={sparkles}
                   alt="#"
                   width={22}
-                  className=" animate-pulse"
+                  className="animate-pulse"
                 />
               </>
             ) : (

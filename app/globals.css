@@ -1,16 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
+/* body {
   background: rgb(29, 27, 25);
-}
+} */
 ::-webkit-scrollbar {
   width: 8px;
-  border-radius: 4px;
-  background: rgb(37, 30, 22);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(83, 78, 71, 0.793);
+  background: rgba(147, 139, 133, 0.7);
   border-radius: 4px;
 }
 #pic {
