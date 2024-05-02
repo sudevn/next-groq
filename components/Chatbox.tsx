@@ -62,7 +62,7 @@ const Chatbox = () => {
                     height={32}
                   />
 
-                  <div className="max-w-3xl rounded-xl markdown-body">
+                  <div className="max-w-3xl rounded-xl markdown-body w-full overflow-x-auto">
                     <Markdown>{m.content}</Markdown>
                   </div>
                   <button
@@ -168,7 +168,7 @@ const Chatbox = () => {
         <div className="relative">
           <textarea
             id="chat-input"
-            className="block w-full resize-none rounded-xl border-none bg-neutral-200 p-4 pl-12 pr-20 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder-neutral-400 dark:focus:ring-orange-500 sm:text-base"
+            className="block caret-orange-600 w-full resize-none rounded-xl border-none bg-neutral-200 p-4 pl-12 pr-20 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder-neutral-400 dark:focus:ring-orange-500 sm:text-base"
             placeholder="Enter your prompt"
             rows={1}
             value={input}
