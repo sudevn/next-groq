@@ -1,5 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { StreamingTextResponse, experimental_streamText } from "ai";
+import { StreamingTextResponse, streamText } from "ai";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
 
-    const result = await experimental_streamText({
+    const result = await streamText({
       model: groq.chat("llama3-70b-8192"), // llama3-8b-8192 , llama3-70b-8192, llama2-70b-4096,  mixtral-8x7b-32768, gemma-7b-it
       messages,
     });
