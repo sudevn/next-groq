@@ -111,7 +111,7 @@ const Chatbox = () => {
         <div ref={messagesEndRef} />
       </div>
       {/* Prompt suggestions */}
-      <div className="mt-4 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-neutral-600 dark:text-neutral-300 sm:text-sm scrollbar-hide">
+      <div className="mt-2 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-neutral-600 dark:text-neutral-300 sm:text-sm scrollbar-hide">
         <button
           title="btn"
           onClick={() => handleSuggestionClick("Make it Shorter and simpler.")}
