@@ -68,18 +68,13 @@ const Chatbox = () => {
                   <button
                     type="button"
                     title="copy"
-                    className="absolute top-2 right-2"
+                    className="absolute top-2 right-2 p-1 rounded-full bg-orange-500 dark:bg-neutral-800 transition-all active:scale-95 opacity-50 hover:opacity-75"
                     onClick={() => {
                       navigator.clipboard.writeText(m.content);
                       alert("Copied to clipboard");
                     }}
                   >
-                    <Image
-                      src={copy}
-                      alt="copy"
-                      width={19}
-                      className="opacity-50 hover:opacity-75"
-                    />
+                    <Image src={copy} alt="copy" width={19} className="" />
                   </button>
                 </div>
               )}
