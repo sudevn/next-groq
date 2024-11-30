@@ -11,7 +11,7 @@ import Markdown from "react-markdown";
 import { useEffect, useRef } from "react";
 
 const Chatbox = () => {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+  const { messages, input, handleInputChange, handleSubmit, isLoading, error } =
     useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -105,7 +105,9 @@ const Chatbox = () => {
               width={22}
               className="animate-pulse"
             />
-            <span>Generating...</span>
+            <span className="bg-gradient-to-r bg-[length:200%_200%] animate-bg-pan from-gray-700/40 to-gray-700/40 via-gray-200 bg-clip-text text-transparent">
+              Generating...
+            </span>
           </div>
         )}
         <div ref={messagesEndRef} />

@@ -130,3 +130,16 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@keyframes bg-pan {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-bg-pan {
+  animation: bg-pan 2.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+}
