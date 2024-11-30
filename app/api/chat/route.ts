@@ -1,22 +1,18 @@
-import { createOpenAI } from "@ai-sdk/openai";
+import { groq } from "@ai-sdk/groq";
 import { streamText } from "ai";
 
 export const dynamic = "force-dynamic";
-export const maxDuration = 30;
-
-const groq = createOpenAI({
-  apiKey: process.env.GROQ_API_KEY ?? "",
-  baseURL: "https://api.groq.com/openai/v1",
-});
+export const maxDuration = 35;
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, selectedModel } = await req.json();
 
     const result = streamText({
-      model: groq.chat("llama3-70b-8192"), // llama3-8b-8192 , llama3-70b-8192, llama2-70b-4096,  mixtral-8x7b-32768, gemma-7b-it,
-      system: 'You are a helpful assistant.',
+      model: groq(selectedModel ?? "llama-3.2-3b-preview"),
+      system: "You are a helpful assistant.",
       messages,
+      maxRetries: 3,
     });
 
     return result.toDataStreamResponse();

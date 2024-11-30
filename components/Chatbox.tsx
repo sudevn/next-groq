@@ -8,12 +8,17 @@ import copy from "@/assets/copy.svg";
 import userPic from "@/assets/userPic.jpg";
 import groqpic from "@/assets/groq.jpg";
 import Markdown from "react-markdown";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Chatbox = () => {
-  const { messages, input, handleInputChange, handleSubmit, isLoading, error } =
-    useChat();
+  const [selectedModel, setSelectedModel] = useState("llama-3.2-3b-preview");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { messages, input, handleInputChange, handleSubmit, isLoading, error } =
+    useChat({
+      body: {
+        selectedModel,
+      },
+    });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -22,6 +27,7 @@ const Chatbox = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
   const handleSuggestionClick = (suggestion: string) => {
     const event = {
       target: {
@@ -30,6 +36,18 @@ const Chatbox = () => {
     } as React.ChangeEvent<HTMLTextAreaElement>;
     handleInputChange(event);
   };
+
+  const handleModelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedModel(event.target.value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmit();
+    }
+  };
+
   return (
     <div className="flex pb-0.5 h-svh w-full flex-col max-w-5xl mx-auto">
       <div className="flex-1 overflow-y-auto rounded-xl bg-neutral-200 p-4 text-sm leading-6 text-neutral-900 dark:bg-neutral-800/60 dark:text-neutral-300 sm:text-base sm:leading-7 border border-orange-600/20 h-full">
@@ -81,8 +99,8 @@ const Chatbox = () => {
             </div>
           ))
         ) : (
-          <div className="flex flex-col items-center">
-            <p className="text-xl md:text-2xl py-20 px-2 font-semibold text-center m-auto text-stone-500 dark:text-stone-400 tracking-wide">
+          <div className="flex flex-col items-center justify-center h-full">
+            <p className="text-xl md:text-2xl px-2 font-semibold text-center mx-auto text-stone-500 dark:text-stone-400 tracking-wide">
               Start Chatting with
               <br />
               <span className="text-orange-500 text-2xl md:text-4xl">Groq</span>
@@ -93,7 +111,7 @@ const Chatbox = () => {
               id="pic"
               alt="ROBO"
               width={300}
-              className="hover:scale-110 transition-all duration-500 active:scale-95"
+              className="hover:scale-110 mt-6 transition-all duration-500 active:scale-95"
             />
           </div>
         )}
@@ -109,6 +127,9 @@ const Chatbox = () => {
               Generating...
             </span>
           </div>
+        )}
+        {error && (
+          <p className="text-red-500">Something went wrong! Try Again</p>
         )}
         <div ref={messagesEndRef} />
       </div>
@@ -159,10 +180,34 @@ const Chatbox = () => {
       </div>
 
       <form className="mt-2" onSubmit={handleSubmit}>
-        <label htmlFor="chat-input" className="sr-only">
-          Enter your prompt
+        <label htmlFor="model-select" className="sr-only">
+          Select Model
         </label>
         <div className="relative">
+          <select
+            id="model-select"
+            className="block w-full rounded-xl border-none bg-neutral-200 p-4 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:focus:ring-orange-500 sm:text-base"
+            value={selectedModel}
+            onChange={handleModelChange}
+          >
+            <option value="gemma2-9b-it">Gemma 2 - 9B IT</option>
+            <option value="gemma-7b-it">Gemma - 7B IT</option>
+            <option value="llama-3.1-70b-versatile">
+              Llama 3.1 - 70B Versatile
+            </option>
+            <option value="llama-3.1-8b-instant">Llama 3.1 - 8B Instant</option>
+            <option value="llama-3.2-1b-preview">Llama 3.2 - 1B Preview</option>
+            <option value="llama-3.2-3b-preview">Llama 3.2 - 3B Preview</option>
+            <option value="llama-3.2-11b-vision-preview">
+              Llama 3.2 - 11B Vision Preview
+            </option>
+            <option value="llama-3.2-90b-vision-preview">
+              Llama 3.2 - 90B Vision Preview
+            </option>
+            <option value="llama3-70b-8192">Llama 3 - 70B 8192</option>
+            <option value="llama3-8b-8192">Llama 3 - 8B 8192</option>
+            <option value="mixtral-8x7b-32768">Mixtral - 8x7B 32768</option>
+          </select>
           <textarea
             id="chat-input"
             className="block caret-orange-600 w-full resize-none rounded-xl border-none bg-neutral-200 p-4 pl-12 pr-20 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder-neutral-400 dark:focus:ring-orange-500 sm:text-base"
@@ -171,6 +216,7 @@ const Chatbox = () => {
             value={input}
             required
             onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
           ></textarea>
           <button
             title="submit"
@@ -193,7 +239,6 @@ const Chatbox = () => {
                 Send <Image src={send} alt="" width={20} />
               </>
             )}
-            <span className="sr-only">Send message</span>
           </button>
         </div>
       </form>
