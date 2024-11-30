@@ -2,7 +2,7 @@ import { Viewport } from "next";
 import "./globals.css";
 import { Montserrat } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import ThemeTogglebutton from "@/components/Themetoggle";
+import Clarity from "@/components/Clarity";
 
 const inter = Montserrat({ subsets: ["latin"] });
 
@@ -31,6 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      {process.env.NODE_ENV === "production" ? <Clarity /> : null}
       <body className={inter.className + " overflow-hidden"}>
         <ThemeProvider attribute="class">
           <div className="relative h-full w-full bg-stone-100 dark:bg-stone-900 overflow-hidden">
