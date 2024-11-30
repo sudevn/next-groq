@@ -135,6 +135,27 @@ const Chatbox = () => {
       </div>
       {/* Prompt suggestions */}
       <div className="mt-2 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-neutral-600 dark:text-neutral-300 sm:text-sm scrollbar-hide">
+        <label htmlFor="model-select" className="sr-only">
+          Select Model
+        </label>
+        <select
+          id="model-select"
+          className="block w-full min-w-44 rounded-xl border-none bg-neutral-200 p-4 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:focus:ring-orange-500 sm:text-base"
+          value={selectedModel}
+          onChange={handleModelChange}
+        >
+          <option value="gemma2-9b-it">Gemma 2 - 9B IT</option>
+          <option value="gemma-7b-it">Gemma - 7B IT</option>
+          <option value="llama-3.1-70b-versatile">
+            Llama 3.1 - 70B Versatile
+          </option>
+          <option value="llama-3.1-8b-instant">Llama 3.1 - 8B Instant</option>
+          <option value="llama-3.2-1b-preview">Llama 3.2 - 1B Preview</option>
+          <option value="llama-3.2-3b-preview">Llama 3.2 - 3B Preview</option>
+          <option value="llama3-70b-8192">Llama 3 - 70B 8192</option>
+          <option value="llama3-8b-8192">Llama 3 - 8B 8192</option>
+          <option value="mixtral-8x7b-32768">Mixtral - 8x7B 32768</option>
+        </select>
         <button
           title="btn"
           onClick={() => handleSuggestionClick("Make it Shorter and simpler.")}
@@ -180,44 +201,17 @@ const Chatbox = () => {
       </div>
 
       <form className="mt-2" onSubmit={handleSubmit}>
-        <label htmlFor="model-select" className="sr-only">
-          Select Model
-        </label>
         <div className="relative">
-          <select
-            id="model-select"
-            className="block w-full rounded-xl border-none bg-neutral-200 p-4 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:focus:ring-orange-500 sm:text-base"
-            value={selectedModel}
-            onChange={handleModelChange}
-          >
-            <option value="gemma2-9b-it">Gemma 2 - 9B IT</option>
-            <option value="gemma-7b-it">Gemma - 7B IT</option>
-            <option value="llama-3.1-70b-versatile">
-              Llama 3.1 - 70B Versatile
-            </option>
-            <option value="llama-3.1-8b-instant">Llama 3.1 - 8B Instant</option>
-            <option value="llama-3.2-1b-preview">Llama 3.2 - 1B Preview</option>
-            <option value="llama-3.2-3b-preview">Llama 3.2 - 3B Preview</option>
-            <option value="llama-3.2-11b-vision-preview">
-              Llama 3.2 - 11B Vision Preview
-            </option>
-            <option value="llama-3.2-90b-vision-preview">
-              Llama 3.2 - 90B Vision Preview
-            </option>
-            <option value="llama3-70b-8192">Llama 3 - 70B 8192</option>
-            <option value="llama3-8b-8192">Llama 3 - 8B 8192</option>
-            <option value="mixtral-8x7b-32768">Mixtral - 8x7B 32768</option>
-          </select>
           <textarea
             id="chat-input"
-            className="block caret-orange-600 w-full resize-none rounded-xl border-none bg-neutral-200 p-4 pl-12 pr-20 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder-neutral-400 dark:focus:ring-orange-500 sm:text-base"
+            className="block caret-orange-600 w-full rounded-xl border-none bg-neutral-200 p-4 pl-2 pr-20 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder-neutral-400 dark:focus:ring-orange-500 sm:text-base resize-y"
             placeholder="Enter your prompt"
             rows={1}
             value={input}
             required
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-          ></textarea>
+          />
           <button
             title="submit"
             type="submit"
