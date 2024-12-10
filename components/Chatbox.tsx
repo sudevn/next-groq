@@ -10,8 +10,20 @@ import groqpic from "@/assets/groq.jpg";
 import Markdown from "react-markdown";
 import { useEffect, useRef, useState } from "react";
 
+const models = [
+  { value: "gemma2-9b-it", label: "Gemma 2 - 9B IT" },
+  { value: "gemma-7b-it", label: "Gemma - 7B IT" },
+  { value: "llama-3.3-70b-versatile", label: "Llama 3.3 - 70B Versatile" },
+  { value: "llama-3.1-8b-instant", label: "Llama 3.1 - 8B Instant" },
+  { value: "llama-3.2-1b-preview", label: "Llama 3.2 - 1B Preview" },
+  { value: "llama-3.2-3b-preview", label: "Llama 3.2 - 3B Preview" },
+  { value: "llama3-70b-8192", label: "Llama 3 - 70B 8192" },
+  { value: "llama3-8b-8192", label: "Llama 3 - 8B 8192" },
+  { value: "mixtral-8x7b-32768", label: "Mixtral - 8x7B 32768" },
+];
+
 const Chatbox = () => {
-  const [selectedModel, setSelectedModel] = useState("llama-3.2-3b-preview");
+  const [selectedModel, setSelectedModel] = useState("llama-3.1-8b-instant");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { messages, input, handleInputChange, handleSubmit, isLoading, error } =
     useChat({
@@ -144,17 +156,11 @@ const Chatbox = () => {
           value={selectedModel}
           onChange={handleModelChange}
         >
-          <option value="gemma2-9b-it">Gemma 2 - 9B IT</option>
-          <option value="gemma-7b-it">Gemma - 7B IT</option>
-          <option value="llama-3.1-70b-versatile">
-            Llama 3.1 - 70B Versatile
-          </option>
-          <option value="llama-3.1-8b-instant">Llama 3.1 - 8B Instant</option>
-          <option value="llama-3.2-1b-preview">Llama 3.2 - 1B Preview</option>
-          <option value="llama-3.2-3b-preview">Llama 3.2 - 3B Preview</option>
-          <option value="llama3-70b-8192">Llama 3 - 70B 8192</option>
-          <option value="llama3-8b-8192">Llama 3 - 8B 8192</option>
-          <option value="mixtral-8x7b-32768">Mixtral - 8x7B 32768</option>
+          {models.map((model) => (
+            <option key={model.value} value={model.value}>
+              {model.label}
+            </option>
+          ))}
         </select>
         <button
           title="btn"
