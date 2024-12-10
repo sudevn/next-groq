@@ -24,13 +24,37 @@ const models = [
 
 const Chatbox = () => {
   const [selectedModel, setSelectedModel] = useState("llama-3.1-8b-instant");
+  const [responseTimes, setResponseTimes] = useState<Record<string, number>>(
+    {}
+  );
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { messages, input, handleInputChange, handleSubmit, isLoading, error } =
-    useChat({
-      body: {
-        selectedModel,
-      },
-    });
+  const startTimeRef = useRef<number>(0);
+
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit: originalHandleSubmit,
+    isLoading,
+    error,
+  } = useChat({
+    body: {
+      selectedModel,
+    },
+    onFinish: (message) => {
+      const endTime = Date.now();
+      const duration = (endTime - startTimeRef.current) / 1000; // Convert to seconds
+      setResponseTimes((prev) => ({
+        ...prev,
+        [message.id]: duration,
+      }));
+    },
+  });
+
+  const handleSubmit = (e?: React.FormEvent) => {
+    startTimeRef.current = Date.now();
+    originalHandleSubmit(e);
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -94,6 +118,11 @@ const Chatbox = () => {
 
                   <div className="max-w-3xl rounded-xl markdown-body w-full overflow-x-auto">
                     <Markdown>{m.content}</Markdown>
+                    {responseTimes[m.id] && (
+                      <div className="text-xs text-neutral-500 mt-2">
+                        Response time: {responseTimes[m.id].toFixed(3)}s
+                      </div>
+                    )}
                   </div>
                   <button
                     type="button"
