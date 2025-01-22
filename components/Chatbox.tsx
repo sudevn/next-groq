@@ -23,7 +23,7 @@ const models = [
 ];
 
 const Chatbox = () => {
-  const [selectedModel, setSelectedModel] = useState("llama-3.1-8b-instant");
+  const [selectedModel, setSelectedModel] = useState("llama-3.3-70b-versatile");
   const [responseTimes, setResponseTimes] = useState<Record<string, number>>(
     {}
   );
@@ -43,7 +43,7 @@ const Chatbox = () => {
     },
     onFinish: (message) => {
       const endTime = Date.now();
-      const duration = (endTime - startTimeRef.current) / 1000; // Convert to seconds
+      const duration = (endTime - startTimeRef.current) / 1000;
       setResponseTimes((prev) => ({
         ...prev,
         [message.id]: duration,
