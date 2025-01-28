@@ -139,7 +139,7 @@ const Chatbox = () => {
                       {think && (
                         <div className="text-sm mb-3 p-3 border rounded-lg bg-stone-100 text-stone-600 dark:bg-stone-900 dark:text-stone-400 border-none">
                           <p className="text-orange-500 animate-pulse p-1">
-                            Thinking...
+                            Thinking....
                           </p>
                           <Markdown>{think}</Markdown>
                         </div>
