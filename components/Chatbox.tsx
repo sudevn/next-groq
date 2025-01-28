@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
 
 const models = [
   { value: "gemma2-9b-it", label: "Gemma 2 - 9B IT" },
-  { value: "gemma-7b-it", label: "Gemma - 7B IT" },
+  { value: "deepseek-r1-distill-llama-70b", label: "Deepseek R1" },
   { value: "llama-3.3-70b-versatile", label: "Llama 3.3 - 70B Versatile" },
   { value: "llama-3.1-8b-instant", label: "Llama 3.1 - 8B Instant" },
   { value: "llama-3.2-1b-preview", label: "Llama 3.2 - 1B Preview" },

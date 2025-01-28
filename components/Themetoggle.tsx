@@ -12,7 +12,12 @@ export default function ThemeTogglebutton() {
       type="button"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
-      <Image src={themeIcon} alt="" width={30} className="size-6" />
+      <Image
+        src={themeIcon}
+        alt="💥"
+        width={30}
+        className="size-6 invert dark:invert-0"
+      />
       <span className="sr-only">Toggle Theme</span>
     </button>
   );
