@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     const result = streamText({
       model: groq(selectedModel ?? "llama-3.1-8b-instant"),
-      system: "You are a helpful assistant named Groq.",
+      system: "You are a helpful assistant",
       messages,
       maxRetries: 3,
       experimental_transform: smoothStream({

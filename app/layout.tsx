@@ -4,7 +4,7 @@ import { Montserrat } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import Clarity from "@/components/Clarity";
 
-const inter = Montserrat({ subsets: ["latin"] });
+const mont = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Groq AI Chatbot",
@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       {process.env.NODE_ENV === "production" ? <Clarity /> : null}
-      <body className={inter.className + " overflow-hidden"}>
+      <body className={mont.className + " overflow-hidden"}>
         <ThemeProvider attribute="class">
           <div className="relative h-full w-full bg-stone-100 dark:bg-stone-900 overflow-hidden">
             <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,105,12,.15),rgba(255,255,255,0))] opacity-0 md:opacity-100"></div>

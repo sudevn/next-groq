@@ -1,6 +1,8 @@
 import Chatbox from "@/components/Chatbox";
-import Floating from "@/components/Floating";
-import ThemeTogglebutton from "@/components/Themetoggle";
+import dynamic from "next/dynamic";
+
+const Floating = dynamic(() => import("@/components/Floating"));
+const ThemeTogglebutton = dynamic(() => import("@/components/Themetoggle"));
 
 export default function Chat() {
   return (

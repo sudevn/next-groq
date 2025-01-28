@@ -10,6 +10,16 @@ import groqpic from "@/assets/groq.jpg";
 import Markdown from "react-markdown";
 import { useEffect, useRef, useState } from "react";
 
+const parseContent = (content: string) => {
+  const thinkRegex = /<think>([\s\S]*?)<\/think>/;
+  const match = content.match(thinkRegex);
+  if (!match) return { think: null, rest: content.trim() };
+
+  const thinkContent = match[1].trim();
+  const restContent = content.replace(thinkRegex, "").trim();
+  return { think: thinkContent, rest: restContent };
+};
+
 const models = [
   { value: "gemma2-9b-it", label: "Gemma 2 - 9B IT" },
   { value: "deepseek-r1-distill-llama-70b", label: "Deepseek R1" },
@@ -88,57 +98,68 @@ const Chatbox = () => {
     <div className="flex pb-0.5 h-svh w-full flex-col max-w-5xl mx-auto">
       <div className="flex-1 overflow-y-auto rounded-xl bg-neutral-200 p-4 text-sm leading-6 text-neutral-900 dark:bg-neutral-800/60 dark:text-neutral-300 sm:text-base sm:leading-7 border border-orange-600/20 h-full">
         {messages.length > 0 ? (
-          messages.map((m) => (
-            <div key={m.id} className="whitespace-pre-wrap">
-              {m.role === "user" ? (
-                <div className="flex flex-row px-2 py-4 sm:px-4">
-                  <Image
-                    alt="user"
-                    placeholder="blur"
-                    className="mr-2 flex size-6 md:size-8 rounded-full sm:mr-4"
-                    src={userPic}
-                    width={32}
-                    height={32}
-                  />
+          messages.map((m) => {
+            const { think, rest } = parseContent(m.content);
+            return (
+              <div key={m.id} className="whitespace-pre-wrap">
+                {m.role === "user" ? (
+                  <div className="flex flex-row px-2 py-4 sm:px-4">
+                    <Image
+                      alt="user"
+                      placeholder="blur"
+                      className="mr-2 flex size-6 md:size-8 rounded-full sm:mr-4"
+                      src={userPic}
+                      width={32}
+                      height={32}
+                    />
 
-                  <div className="flex max-w-3xl items-center">
-                    <p>{m.content}</p>
+                    <div className="flex max-w-3xl items-center">
+                      <p>{m.content}</p>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div className="mb-4 flex rounded-xl bg-neutral-50 px-2 py-6 dark:bg-neutral-900 sm:px-4 relative">
-                  <Image
-                    alt="groq"
-                    className="mr-2 flex size-6 md:size-8 rounded-full sm:mr-4"
-                    src={groqpic}
-                    placeholder="blur"
-                    width={32}
-                    height={32}
-                  />
+                ) : (
+                  <div className="mb-4 flex rounded-xl bg-neutral-50 px-2 py-6 dark:bg-neutral-900 sm:px-4 relative">
+                    <Image
+                      alt="groq"
+                      className="mr-2 flex size-6 md:size-8 rounded-full sm:mr-4"
+                      src={groqpic}
+                      placeholder="blur"
+                      width={32}
+                      height={32}
+                    />
 
-                  <div className="max-w-3xl rounded-xl markdown-body w-full overflow-x-auto">
-                    <Markdown>{m.content}</Markdown>
-                    {responseTimes[m.id] && (
-                      <div className="text-xs text-neutral-500 mt-2">
-                        Response time: {responseTimes[m.id].toFixed(3)}s
-                      </div>
-                    )}
+                    <div className="max-w-3xl rounded-xl markdown-body w-full overflow-x-auto">
+                      {think && (
+                        <div className="text-sm mb-3 p-3 border rounded-lg bg-stone-100 text-stone-600 dark:bg-stone-900 dark:text-stone-400 border-none">
+                          <p className="text-orange-500 animate-pulse p-1">
+                            Thinking...
+                          </p>
+                          <Markdown>{think}</Markdown>
+                        </div>
+                      )}
+                      <Markdown>{rest}</Markdown>
+                      {responseTimes[m.id] && (
+                        <div className="text-xs text-neutral-500 mt-2">
+                          Response time: {responseTimes[m.id].toFixed(3)}s
+                        </div>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      title="copy"
+                      className="absolute top-2 right-2 p-1 rounded-full bg-orange-500 dark:bg-neutral-800 transition-all active:scale-95 opacity-50 hover:opacity-75"
+                      onClick={() => {
+                        navigator.clipboard.writeText(m.content);
+                        alert("Copied to clipboard");
+                      }}
+                    >
+                      <Image src={copy} alt="copy" width={19} className="" />
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    title="copy"
-                    className="absolute top-2 right-2 p-1 rounded-full bg-orange-500 dark:bg-neutral-800 transition-all active:scale-95 opacity-50 hover:opacity-75"
-                    onClick={() => {
-                      navigator.clipboard.writeText(m.content);
-                      alert("Copied to clipboard");
-                    }}
-                  >
-                    <Image src={copy} alt="copy" width={19} className="" />
-                  </button>
-                </div>
-              )}
-            </div>
-          ))
+                )}
+              </div>
+            );
+          })
         ) : (
           <div className="flex flex-col items-center justify-center h-full">
             <p className="text-xl md:text-2xl px-2 font-semibold text-center mx-auto text-stone-500 dark:text-stone-400 tracking-wide">

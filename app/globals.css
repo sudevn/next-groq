@@ -1,10 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, Arial, "Trebuchet MS",
-    sans-serif;
-}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -20,6 +17,7 @@ body {
 }
 ::selection {
   background: #d03e09;
+  color: white;
 }
 
 /* Headings */
