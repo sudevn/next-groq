@@ -222,20 +222,6 @@ const Chatbox = () => {
         <button
           title="btn"
           type="button"
-          onClick={() =>
-            window.open(
-              "https://img-gen7.netlify.app/",
-              "_blank",
-              "noopener noreferrer"
-            )
-          }
-          className="rounded-lg hover:bg-linear-to-br from-orange-600 to-rose-600 p-2 hover:text-white transition-all active:scale-105 border border-orange-600 font-semibold"
-        >
-          Generate Image ✨
-        </button>
-        <button
-          title="btn"
-          type="button"
           onClick={() => handleSuggestionClick("Make it Shorter and simpler.")}
           className="rounded-lg bg-neutral-200 p-2 hover:bg-orange-600 hover:text-neutral-200 dark:bg-neutral-800 dark:hover:bg-orange-600 dark:hover:text-neutral-50 transition-all active:scale-105"
         >
