@@ -8,7 +8,6 @@ export default function Chat() {
   return (
     <>
       <ThemeTogglebutton />
-      <Floating />
       <Chatbox />
     </>
   );
