@@ -192,7 +192,7 @@ const Chatbox = () => {
               width={22}
               className="animate-pulse"
             />
-            <span className="bg-gradient-to-r bg-[length:200%_200%] animate-bg-pan from-gray-700/40 to-gray-700/40 via-gray-200 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r bg-[length:200%_200%] animate-bg-pan from-gray-700/40 to-gray-700/40 via-gray-200 bg-clip-text text-transparent">
               Generating...
             </span>
           </div>
@@ -209,7 +209,7 @@ const Chatbox = () => {
         </label>
         <select
           id="model-select"
-          className="block w-full min-w-44 rounded-xl border-none bg-neutral-200 p-4 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:focus:ring-orange-500 sm:text-base"
+          className="block w-full min-w-44 rounded-xl border-none bg-neutral-200 p-4 text-sm text-neutral-900 focus:outline-hidden focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:focus:ring-orange-500 sm:text-base"
           value={selectedModel}
           onChange={handleModelChange}
         >
@@ -229,7 +229,7 @@ const Chatbox = () => {
               "noopener noreferrer"
             )
           }
-          className="rounded-lg bg-gradient-to-br from-orange-600 to-rose-600 p-2 text-white transition-all active:scale-105 border border-orange-600 font-semibold hover:opacity-80"
+          className="rounded-lg hover:bg-linear-to-br from-orange-600 to-rose-600 p-2 hover:text-white transition-all active:scale-105 border border-orange-600 font-semibold"
         >
           Generate Image ✨
         </button>
@@ -286,7 +286,7 @@ const Chatbox = () => {
         <div className="relative">
           <textarea
             id="chat-input"
-            className="block caret-orange-600 w-full rounded-xl border-none bg-neutral-200 p-4 pl-2 pr-20 text-sm text-neutral-900 focus:outline-none focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder-neutral-400 dark:focus:ring-orange-500 sm:text-base resize-y"
+            className="block caret-orange-600 w-full rounded-xl border-none bg-neutral-200 p-4 pl-2 pr-20 text-sm text-neutral-900 focus:outline-hidden focus:ring-2 focus:ring-orange-500 dark:bg-neutral-800 dark:text-neutral-200 dark:placeholder-neutral-400 dark:focus:ring-orange-500 sm:text-base resize-y"
             placeholder="Enter your prompt"
             rows={1}
             value={input}
@@ -298,7 +298,7 @@ const Chatbox = () => {
             title="submit"
             type="submit"
             disabled={isLoading}
-            className="absolute bottom-2 right-2.5 rounded-lg  px-4 py-2 text-sm font-medium text-neutral-200 focus:outline-none focus:ring-4 focus:ring-orange-300 bg-orange-600 hover:bg-orange-700 dark:focus:ring-orange-800 sm:text-base flex items-center gap-2 active:scale-95 transition-all"
+            className="absolute bottom-2 right-2.5 rounded-lg  px-4 py-2 text-sm font-medium text-neutral-200 focus:outline-hidden focus:ring-4 focus:ring-orange-300 bg-orange-600 hover:bg-orange-700 dark:focus:ring-orange-800 sm:text-base flex items-center gap-2 active:scale-95 transition-all"
           >
             {isLoading ? (
               <>
