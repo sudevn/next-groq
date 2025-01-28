@@ -20,6 +20,11 @@ const parseContent = (content: string) => {
   return { think: thinkContent, rest: restContent };
 };
 
+// Added type for collapsed state tracking
+type CollapsedState = {
+  [key: string]: boolean;
+};
+
 const models = [
   { value: "gemma2-9b-it", label: "Gemma 2 - 9B IT" },
   { value: "deepseek-r1-distill-llama-70b", label: "Deepseek R1" },
@@ -33,10 +38,13 @@ const models = [
 ];
 
 const Chatbox = () => {
-  const [selectedModel, setSelectedModel] = useState("deepseek-r1-distill-llama-70b");
-  const [responseTimes, setResponseTimes] = useState<Record<string, number>>(
-    {}
+  const [selectedModel, setSelectedModel] = useState(
+    "deepseek-r1-distill-llama-70b",
   );
+  const [responseTimes, setResponseTimes] = useState<Record<string, number>>(
+    {},
+  );
+  const [collapsedStates, setCollapsedStates] = useState<CollapsedState>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const startTimeRef = useRef<number>(0);
 
@@ -61,6 +69,13 @@ const Chatbox = () => {
     },
   });
 
+  const toggleThinking = useCallback((messageId: string) => {
+    setCollapsedStates((prev) => ({
+      ...prev,
+      [messageId]: !prev[messageId],
+    }));
+  }, []);
+
   const handleSubmit = (e?: React.FormEvent) => {
     startTimeRef.current = Date.now();
     originalHandleSubmit(e);
@@ -81,14 +96,14 @@ const Chatbox = () => {
       } as React.ChangeEvent<HTMLTextAreaElement>;
       handleInputChange(event);
     },
-    [handleInputChange]
+    [handleInputChange],
   );
 
   const handleModelChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       setSelectedModel(event.target.value);
     },
-    []
+    [],
   );
 
   const handleKeyDown = useCallback(
@@ -98,7 +113,7 @@ const Chatbox = () => {
         handleSubmit();
       }
     },
-    [handleSubmit]
+    [handleSubmit],
   );
 
   return (
@@ -119,7 +134,6 @@ const Chatbox = () => {
                       width={32}
                       height={32}
                     />
-
                     <div className="flex max-w-3xl items-center">
                       <p>{m.content}</p>
                     </div>
@@ -138,10 +152,20 @@ const Chatbox = () => {
                     <div className="max-w-3xl rounded-xl markdown-body w-full overflow-x-auto">
                       {think && (
                         <div className="text-sm mb-3 p-3 border rounded-lg bg-stone-100 text-stone-600 dark:bg-stone-900 dark:text-stone-400 border-none">
-                          <p className="text-orange-500 animate-pulse p-1">
-                            Thinking....
-                          </p>
-                          <Markdown>{think}</Markdown>
+                          <button
+                            onClick={() => toggleThinking(m.id)}
+                            className="flex items-center gap-2 w-full text-orange-500 hover:text-orange-600 transition-colors"
+                          >
+                            <span className="animate-pulse">Thinking....</span>
+                            <span className="text-xs ml-auto">
+                              {collapsedStates[m.id] ? "Show" : "Hide"}
+                            </span>
+                          </button>
+                          {!collapsedStates[m.id] && (
+                            <div className="mt-2">
+                              <Markdown>{think}</Markdown>
+                            </div>
+                          )}
                         </div>
                       )}
                       <Markdown>{rest}</Markdown>
@@ -202,6 +226,7 @@ const Chatbox = () => {
         )}
         <div ref={messagesEndRef} />
       </div>
+
       {/* Prompt suggestions */}
       <div className="mt-2 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-neutral-600 dark:text-neutral-300 sm:text-sm scrollbar-hide shrink-0">
         <label htmlFor="model-select" className="sr-only">
@@ -284,7 +309,7 @@ const Chatbox = () => {
             title="submit"
             type="submit"
             disabled={isLoading}
-            className="absolute bottom-2 right-2.5 rounded-lg  px-4 py-2 text-sm font-medium text-neutral-200 focus:outline-hidden focus:ring-4 focus:ring-orange-300 bg-orange-600 hover:bg-orange-700 dark:focus:ring-orange-800 sm:text-base flex items-center gap-2 active:scale-95 transition-all"
+            className="absolute bottom-2 right-2.5 rounded-lg px-4 py-2 text-sm font-medium text-neutral-200 focus:outline-hidden focus:ring-4 focus:ring-orange-300 bg-orange-600 hover:bg-orange-700 dark:focus:ring-orange-800 sm:text-base flex items-center gap-2 active:scale-95 transition-all"
           >
             {isLoading ? (
               <>
