@@ -33,7 +33,7 @@ const models = [
 ];
 
 const Chatbox = () => {
-  const [selectedModel, setSelectedModel] = useState("llama-3.3-70b-versatile");
+  const [selectedModel, setSelectedModel] = useState("deepseek-r1-distill-llama-70b");
   const [responseTimes, setResponseTimes] = useState<Record<string, number>>(
     {}
   );
