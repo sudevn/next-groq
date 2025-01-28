@@ -8,7 +8,8 @@ const mont = Montserrat({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Groq AI Chatbot",
-  description: "Groq AI Chatbot - Made using Next.js 14 and Vercel AI sdk",
+  description:
+    "Groq AI Chatbot - Made using Next.js 15 and Vercel AI sdk powered by Groq. Supports multiple models like Gemini, Llama3, Deepseek, Mixtral",
   metadataBase: new URL("https://groq-ai.vercel.app/"),
   manifest: "/manifest.json",
   icons: {
@@ -33,7 +34,7 @@ export default function RootLayout({
     <html lang="en">
       {process.env.NODE_ENV === "production" ? <Clarity /> : null}
       <body className={mont.className + " overflow-hidden"}>
-        <ThemeProvider attribute="class">
+        <ThemeProvider attribute="class" defaultTheme="dark">
           <div className="relative h-full w-full bg-stone-100 dark:bg-stone-900 overflow-hidden">
             <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,105,12,.15),rgba(255,255,255,0))] opacity-0 md:opacity-100"></div>
             <div className="absolute bottom-0 right-[-20%] top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,105,12,.15),rgba(255,255,255,0))]"></div>

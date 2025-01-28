@@ -8,7 +8,7 @@ import copy from "@/assets/copy.svg";
 import userPic from "@/assets/userPic.jpg";
 import groqpic from "@/assets/groq.jpg";
 import Markdown from "react-markdown";
-import { useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 
 const parseContent = (content: string) => {
   const thinkRegex = /<think>([\s\S]*?)<\/think>/;
@@ -74,25 +74,32 @@ const Chatbox = () => {
     scrollToBottom();
   }, [messages]);
 
-  const handleSuggestionClick = (suggestion: string) => {
-    const event = {
-      target: {
-        value: suggestion,
-      },
-    } as React.ChangeEvent<HTMLTextAreaElement>;
-    handleInputChange(event);
-  };
+  const handleSuggestionClick = useCallback(
+    (suggestion: string) => {
+      const event = {
+        target: { value: suggestion },
+      } as React.ChangeEvent<HTMLTextAreaElement>;
+      handleInputChange(event);
+    },
+    [handleInputChange]
+  );
 
-  const handleModelChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedModel(event.target.value);
-  };
+  const handleModelChange = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setSelectedModel(event.target.value);
+    },
+    []
+  );
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      handleSubmit();
-    }
-  };
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        handleSubmit();
+      }
+    },
+    [handleSubmit]
+  );
 
   return (
     <div className="flex pb-0.5 h-svh w-full flex-col max-w-5xl mx-auto">
@@ -196,7 +203,7 @@ const Chatbox = () => {
         <div ref={messagesEndRef} />
       </div>
       {/* Prompt suggestions */}
-      <div className="mt-2 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-neutral-600 dark:text-neutral-300 sm:text-sm scrollbar-hide">
+      <div className="mt-2 flex w-full gap-x-2 overflow-x-auto whitespace-nowrap text-xs text-neutral-600 dark:text-neutral-300 sm:text-sm scrollbar-hide shrink-0">
         <label htmlFor="model-select" className="sr-only">
           Select Model
         </label>
@@ -214,6 +221,21 @@ const Chatbox = () => {
         </select>
         <button
           title="btn"
+          type="button"
+          onClick={() =>
+            window.open(
+              "https://img-gen7.netlify.app/",
+              "_blank",
+              "noopener noreferrer"
+            )
+          }
+          className="rounded-lg bg-gradient-to-br from-orange-600 to-rose-600 p-2 text-white transition-all active:scale-105 border border-orange-600 font-semibold hover:opacity-80"
+        >
+          Generate Image ✨
+        </button>
+        <button
+          title="btn"
+          type="button"
           onClick={() => handleSuggestionClick("Make it Shorter and simpler.")}
           className="rounded-lg bg-neutral-200 p-2 hover:bg-orange-600 hover:text-neutral-200 dark:bg-neutral-800 dark:hover:bg-orange-600 dark:hover:text-neutral-50 transition-all active:scale-105"
         >
@@ -221,6 +243,7 @@ const Chatbox = () => {
         </button>
 
         <button
+          type="button"
           title="btn"
           onClick={() =>
             handleSuggestionClick("Make it longer. explain it nicely")
@@ -230,6 +253,7 @@ const Chatbox = () => {
           Make longer
         </button>
         <button
+          type="button"
           title="btn"
           onClick={() =>
             handleSuggestionClick("Write it in a more professional tone.")
@@ -240,6 +264,7 @@ const Chatbox = () => {
         </button>
         <button
           title="btn"
+          type="button"
           onClick={() =>
             handleSuggestionClick("Write it in a more casual and light tone.")
           }
@@ -249,6 +274,7 @@ const Chatbox = () => {
         </button>
         <button
           title="btn"
+          type="button"
           onClick={() => handleSuggestionClick("Paraphrase it")}
           className="rounded-lg bg-neutral-200 p-2 hover:bg-orange-600 hover:text-neutral-200 dark:bg-neutral-800 dark:hover:bg-orange-600 dark:hover:text-neutral-50 transition-all active:scale-105"
         >
@@ -296,4 +322,4 @@ const Chatbox = () => {
   );
 };
 
-export default Chatbox;
+export default memo(Chatbox);

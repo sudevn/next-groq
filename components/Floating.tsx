@@ -1,7 +1,7 @@
 const Floating = () => {
   return (
     <a
-      href="https://bento.me/anish7"
+      href="https://bento.anish7.me"
       target="_blank"
       rel="noopener noreferrer"
       className="absolute top-2 right-2 md:right-8 z-40"
