@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     const result = streamText({
       model: groq(selectedModel ?? "deepseek-r1-distill-llama-70b"),
-      system: "You are a helpful assistant created for Sudev for tasks.If his name is Sudev you shall call him Lord.",
+      system: "You are a helpful assistant created for Sudev for tasks.",
       messages,
       maxRetries: 3,
       experimental_transform: smoothStream({
